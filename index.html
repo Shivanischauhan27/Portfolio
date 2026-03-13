@@ -127,6 +127,12 @@
     .hero-scroll-line { width: 1px; height: 48px; background: rgba(250,246,237,0.2); }
     @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
 
+    /* ─── TYPEWRITER CURSOR ──────────────────────── */
+    .tcursor { display: none; background: var(--glaucous-lt); border-radius: 1px; vertical-align: middle; animation: tcursor-blink 0.72s step-end infinite; }
+    .hero-name .tcursor { height: 0.72em; width: 5px; }
+    .hero-tagline .tcursor { height: 0.85em; width: 2px; background: rgba(250,246,237,0.65); }
+    @keyframes tcursor-blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
     /* ─── SHARED ─────────────────────────────────── */
     .section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 1rem; }
     .label-blue  { color: var(--glaucous); }
@@ -169,16 +175,11 @@
     .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
     .project-card { background: rgba(242,240,235,0.04); border: 1px solid var(--border-dark); border-radius: 8px; overflow: hidden; transition: transform 0.4s var(--ease), box-shadow 0.4s, border-color 0.4s; display: flex; flex-direction: column; }
     .project-card:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(0,0,0,0.3); border-color: rgba(96,130,182,0.4); }
-    .project-phone-wrap { background: rgba(43,72,120,0.4); padding: 40px 30px 0; display: flex; justify-content: center; min-height: 260px; position: relative; overflow: hidden; }
-    .project-phone-wrap::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: linear-gradient(to bottom, transparent, rgba(43,72,120,0.4)); }
-    .phone-frame { width: 140px; position: relative; background: #0d1b2e; border-radius: 24px 24px 0 0; padding: 12px 8px 0; box-shadow: 0 -8px 40px rgba(0,0,0,0.4); flex-shrink: 0; }
-    .phone-notch { width: 40px; height: 6px; background: #1a2d47; border-radius: 3px; margin: 0 auto 10px; }
-    .phone-screen { border-radius: 4px; min-height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .phone-screen-icon { font-size: 2rem; opacity: 0.5; }
-    .ps-1 { background: linear-gradient(145deg, #3a5a9b, #6082b6); }
-    .ps-2 { background: linear-gradient(145deg, #2b4878, #4a6fa5); }
-    .ps-3 { background: linear-gradient(145deg, #1c3557, #3a5a9b); }
-    .ps-4 { background: linear-gradient(145deg, #4a6fa5, #7a9dcc); }
+    .project-img-wrap { width: 100%; height: 230px; overflow: hidden; background: rgba(43,72,120,0.4); }
+    .project-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.6s cubic-bezier(0.4,0,0.2,1); }
+    .project-card:hover .project-img-wrap img { transform: scale(1.04); }
+    .project-img-placeholder { width: 100%; height: 230px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+    .pip-4 { background: linear-gradient(145deg, #4a6fa5, #7a9dcc); }
     .project-body { padding: 28px 28px 32px; flex: 1; display: flex; flex-direction: column; }
     .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
     .project-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--glaucous-lt); background: rgba(201,168,76,0.15); padding: 4px 12px; border-radius: 100px; }
@@ -274,7 +275,73 @@
       .contact-form { padding: 28px 22px; }
     }
     @media (max-width: 440px) { .videos-grid { grid-template-columns: 1fr; } }
+
+    /* ─── DASHBOARD TRIGGER ──────────────────── */
+    .dash-trigger-wrap { text-align: center; padding: 56px 0 0; }
+    .dash-trigger-btn { background: transparent; border: 1.5px solid rgba(168,189,219,0.35); color: var(--glaucous-lt); font-family: var(--sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 15px 44px; border-radius: 4px; cursor: pointer; transition: all 0.35s var(--ease); display: inline-flex; align-items: center; gap: 10px; }
+    .dash-trigger-btn:hover { border-color: var(--glaucous-lt); background: rgba(168,189,219,0.08); transform: translateY(-2px); }
+    .dash-trigger-btn .dtb-arrow { transition: transform 0.35s var(--ease); display: inline-block; font-style: normal; }
+    .dash-trigger-btn.open .dtb-arrow { transform: rotate(180deg); }
+
+    /* ─── DASHBOARD SECTION ──────────────────── */
+    #dashboard { background: #07111e; overflow: hidden; max-height: 0; opacity: 0; transition: max-height 1.6s cubic-bezier(0.4,0,0.2,1), opacity 0.7s ease; }
+    #dashboard.open { max-height: 5000px; opacity: 1; }
+    .dashboard-inner { padding: 100px 0; }
+    .dash-section-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #5bc0de; margin-bottom: 1rem; }
+    .dash-heading { font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 900; color: #f2f0eb; line-height: 1; letter-spacing: -0.02em; margin-bottom: 56px; }
+    .dash-heading em { font-style: italic; color: #6ad4dd; }
+    /* KPI counters */
+    .dash-counters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 28px; }
+    .dash-kpi { background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 26px 22px; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+    .dash-kpi:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-3px); }
+    .dash-kpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 10px 10px 0 0; }
+    .kpi-ig::before    { background: linear-gradient(90deg, #e1306c, #f77737); }
+    .kpi-reach::before { background: linear-gradient(90deg, #6082b6, #6ad4dd); }
+    .kpi-yt::before    { background: linear-gradient(90deg, #cc0000, #ff4444); }
+    .kpi-lead::before  { background: linear-gradient(90deg, #27ae60, #2ecc71); }
+    .kpi-num  { font-family: var(--serif); font-size: 2.6rem; font-weight: 900; color: #f2f0eb; line-height: 1; margin-bottom: 5px; }
+    .kpi-lbl  { font-size: 0.72rem; font-weight: 600; color: rgba(242,240,235,0.42); text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4; }
+    .kpi-plat { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 10px; }
+    .plat-ig    { color: #e1306c; } .plat-reach { color: #6ad4dd; } .plat-yt { color: #ff4444; } .plat-lead { color: #2ecc71; }
+    /* Charts */
+    .dash-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 22px; }
+    .dash-chart-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.065); border-radius: 10px; padding: 28px; }
+    .dcb-title { font-family: var(--serif); font-size: 1rem; font-weight: 700; color: #f2f0eb; margin-bottom: 2px; }
+    .dcb-sub   { font-size: 0.72rem; color: rgba(242,240,235,0.35); margin-bottom: 20px; }
+    .dcb-wrap  { position: relative; height: 220px; }
+    /* Paid Ads */
+    .dash-ads { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 22px; }
+    .dash-ad-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.065); border-radius: 10px; padding: 26px 22px; }
+    .dac-icon { font-size: 1.4rem; margin-bottom: 10px; }
+    .dac-lbl  { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(242,240,235,0.38); margin-bottom: 6px; }
+    .dac-val  { font-family: var(--serif); font-size: 2.4rem; font-weight: 900; line-height: 1; margin-bottom: 10px; }
+    .dac-desc { font-size: 0.78rem; color: rgba(242,240,235,0.38); margin-bottom: 14px; line-height: 1.55; }
+    .dac-bar-bg { height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+    .dac-bar  { height: 100%; border-radius: 3px; width: 0; transition: width 1.8s cubic-bezier(0.4,0,0.2,1) 0.4s; }
+    .bar-red { background: linear-gradient(90deg, #ff6b6b, #ee5a24); }
+    .bar-grn { background: linear-gradient(90deg, #2ecc71, #00b894); }
+    .bar-blu { background: linear-gradient(90deg, #6082b6, #6ad4dd); }
+    .val-red { color: #ff6b6b; } .val-grn { color: #2ecc71; } .val-blu { color: #6ad4dd; }
+    /* Bottom row */
+    .dash-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .dash-stat-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.065); border-radius: 10px; padding: 26px 22px; }
+    .dsb-num { font-family: var(--serif); font-size: 2.6rem; font-weight: 900; color: #f2f0eb; line-height: 1; margin-bottom: 4px; }
+    .dsb-lbl { font-size: 0.78rem; color: rgba(242,240,235,0.45); line-height: 1.55; }
+    .acc-y { color: #f39c12; } .acc-p { color: #9b59b6; } .acc-g { color: #2ecc71; }
+    .team-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+    .team-chip { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 5px 12px; font-size: 0.67rem; font-weight: 600; color: rgba(242,240,235,0.55); }
+    @media (max-width: 900px) {
+      .dash-counters { grid-template-columns: repeat(2, 1fr); }
+      .dash-charts   { grid-template-columns: 1fr; }
+      .dash-ads      { grid-template-columns: 1fr; }
+      .dash-bottom   { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .dash-counters { grid-template-columns: 1fr 1fr; }
+      .dash-bottom   { grid-template-columns: 1fr; }
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -308,10 +375,13 @@
   <section id="hero">
     <div class="container">
       <p class="hero-eyebrow reveal">Content Lead &amp; Creative Director</p>
-      <h1 class="hero-name reveal">Shivani<br><em>Chauhan</em></h1>
+      <h1 class="hero-name" id="hero-name-el" style="opacity:1">
+        <span id="type-line1"></span><span class="tcursor" id="tcur1"></span><br>
+        <em><span id="type-line2"></span></em><span class="tcursor" id="tcur2"></span>
+      </h1>
       <p class="hero-role reveal">Building brands through story, strategy &amp; data</p>
-      <blockquote class="hero-tagline reveal">
-        I build content engines that grow audiences, drive acquisition, and turn strategy into measurable results
+      <blockquote class="hero-tagline" id="hero-tagline-el" style="opacity:0">
+        <span id="type-tagline"></span><span class="tcursor" id="tcur3"></span>
       </blockquote>
       <div class="hero-cta reveal">
         <a href="#projects" class="btn btn-light">View My Work</a>
@@ -408,11 +478,8 @@
       <div class="projects-grid">
 
         <div class="project-card reveal">
-          <div class="project-phone-wrap">
-            <div class="phone-frame">
-              <div class="phone-notch"></div>
-              <div class="phone-screen ps-1"><div class="phone-screen-icon">📱</div></div>
-            </div>
+          <div class="project-img-wrap">
+            <img src="./short-form.jpg" alt="Short-form content work at AccioJob" />
           </div>
           <div class="project-body">
             <div class="project-tags"><span class="project-tag">Social Media</span><span class="project-tag">Content Strategy</span><span class="project-tag">Short-Form Video</span></div>
@@ -423,11 +490,8 @@
         </div>
 
         <div class="project-card reveal">
-          <div class="project-phone-wrap">
-            <div class="phone-frame">
-              <div class="phone-notch"></div>
-              <div class="phone-screen ps-2"><div class="phone-screen-icon">🎙️</div></div>
-            </div>
+          <div class="project-img-wrap">
+            <img src="./long-form.jpg" alt="YouTube and podcast long-form content" />
           </div>
           <div class="project-body">
             <div class="project-tags"><span class="project-tag">YouTube</span><span class="project-tag">Podcast</span><span class="project-tag">Video Production</span></div>
@@ -438,11 +502,8 @@
         </div>
 
         <div class="project-card reveal">
-          <div class="project-phone-wrap">
-            <div class="phone-frame">
-              <div class="phone-notch"></div>
-              <div class="phone-screen ps-3"><div class="phone-screen-icon">📈</div></div>
-            </div>
+          <div class="project-img-wrap">
+            <img src="./podcast.jpg" alt="Podcast and long-form content series" />
           </div>
           <div class="project-body">
             <div class="project-tags"><span class="project-tag">Meta Ads</span><span class="project-tag">Google Ads</span><span class="project-tag">Performance Marketing</span></div>
@@ -452,18 +513,111 @@
           </div>
         </div>
 
-        <div class="project-card reveal">
-          <div class="project-phone-wrap">
-            <div class="phone-frame">
-              <div class="phone-notch"></div>
-              <div class="phone-screen ps-4"><div class="phone-screen-icon">🎯</div></div>
-            </div>
+
+      </div>
+
+      <!-- Dashboard trigger -->
+      <div class="dash-trigger-wrap reveal">
+        <p style="font-size:0.78rem;color:rgba(242,240,235,0.28);margin-bottom:18px;letter-spacing:0.06em;">Numbers don't lie.</p>
+        <button class="dash-trigger-btn" id="dashTriggerBtn" onclick="toggleDashboard()">
+          📊 &nbsp;View Full Impact Dashboard &nbsp;<em class="dtb-arrow">↓</em>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard">
+    <div class="dashboard-inner">
+      <div class="container">
+
+        <div class="dash-header">
+          <p class="dash-section-label">By The Numbers</p>
+          <h2 class="dash-heading">Impact &amp; <em>Results</em></h2>
+        </div>
+
+        <!-- KPI Counters -->
+        <div class="dash-counters">
+          <div class="dash-kpi kpi-ig">
+            <div class="kpi-num" id="ctr-ig">0</div>
+            <div class="kpi-lbl">Instagram Followers</div>
+            <div class="kpi-plat plat-ig">● Instagram</div>
           </div>
-          <div class="project-body">
-            <div class="project-tags"><span class="project-tag">Full-Funnel</span><span class="project-tag">Lead Acquisition</span><span class="project-tag">Content Strategy</span></div>
-            <h3 class="project-title">Content-Led Acquisition at Shine.com</h3>
-            <p class="project-desc">Owned end-to-end social acquisition strategy across paid and organic channels, designing full-funnel frameworks connecting TOFU content with paid distribution.</p>
-            <div class="project-result"><div class="project-result-label">Results</div>Improved lead quality while reducing acquisition costs</div>
+          <div class="dash-kpi kpi-reach">
+            <div class="kpi-num" id="ctr-reach">0</div>
+            <div class="kpi-lbl">Monthly Reach</div>
+            <div class="kpi-plat plat-reach">● Cross-Platform</div>
+          </div>
+          <div class="dash-kpi kpi-yt">
+            <div class="kpi-num" id="ctr-yt">0</div>
+            <div class="kpi-lbl">YouTube Total Views</div>
+            <div class="kpi-plat plat-yt">● YouTube</div>
+          </div>
+          <div class="dash-kpi kpi-lead">
+            <div class="kpi-num" id="ctr-lead">0</div>
+            <div class="kpi-lbl">Qualified Leads Generated</div>
+            <div class="kpi-plat plat-lead">● WhatsApp / Affiliate</div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="dash-charts">
+          <div class="dash-chart-box">
+            <div class="dcb-title">Platform Audience</div>
+            <div class="dcb-sub">Followers &amp; subscribers built across channels</div>
+            <div class="dcb-wrap"><canvas id="followerChart"></canvas></div>
+          </div>
+          <div class="dash-chart-box">
+            <div class="dcb-title">Content Output</div>
+            <div class="dcb-sub">Volume produced &amp; high-performing pieces</div>
+            <div class="dcb-wrap"><canvas id="contentChart"></canvas></div>
+          </div>
+        </div>
+
+        <!-- Paid Ads -->
+        <div class="dash-ads">
+          <div class="dash-ad-card">
+            <div class="dac-icon">📉</div>
+            <div class="dac-lbl">Cost Per Lead</div>
+            <div class="dac-val val-red">−20%</div>
+            <div class="dac-desc">Reduced CPL through insight-led creative testing across Google &amp; Meta</div>
+            <div class="dac-bar-bg"><div class="dac-bar bar-red" data-w="80"></div></div>
+          </div>
+          <div class="dash-ad-card">
+            <div class="dac-icon">📈</div>
+            <div class="dac-lbl">Conversion Rate</div>
+            <div class="dac-val val-grn">+25%</div>
+            <div class="dac-desc">Improved funnel conversion through content–ad alignment</div>
+            <div class="dac-bar-bg"><div class="dac-bar bar-grn" data-w="75"></div></div>
+          </div>
+          <div class="dash-ad-card">
+            <div class="dac-icon">💬</div>
+            <div class="dac-lbl">Engagement Rate</div>
+            <div class="dac-val val-blu">+30%</div>
+            <div class="dac-desc">Higher engagement across paid and organic campaigns</div>
+            <div class="dac-bar-bg"><div class="dac-bar bar-blu" data-w="85"></div></div>
+          </div>
+        </div>
+
+        <!-- Bottom stats -->
+        <div class="dash-bottom">
+          <div class="dash-stat-box">
+            <div class="dsb-num acc-y">5,000+</div>
+            <div class="dsb-lbl">Verified registrations from job drives &amp; offline events</div>
+          </div>
+          <div class="dash-stat-box">
+            <div class="dsb-num acc-p">+30%</div>
+            <div class="dsb-lbl">Increase in offline walk-ins across Hyderabad, Pune &amp; Noida</div>
+          </div>
+          <div class="dash-stat-box">
+            <div class="dsb-num acc-g">6</div>
+            <div class="dsb-lbl">People managed across content, video &amp; social</div>
+            <div class="team-row">
+              <span class="team-chip">4× Video Editors</span>
+              <span class="team-chip">1× Content Marketer</span>
+              <span class="team-chip">1× Social Media Mgr</span>
+            </div>
           </div>
         </div>
 
@@ -662,6 +816,99 @@
   </footer>
 
   <script>
+    // ── HERO TYPEWRITER ────────────────────────────
+    (function() {
+      const L1    = document.getElementById('type-line1');
+      const L2    = document.getElementById('type-line2');
+      const TL    = document.getElementById('type-tagline');
+      const c1    = document.getElementById('tcur1');
+      const c2    = document.getElementById('tcur2');
+      const c3    = document.getElementById('tcur3');
+      const nameEl    = document.getElementById('hero-name-el');
+      const taglineEl = document.getElementById('hero-tagline-el');
+      const eyebrow   = document.querySelector('.hero-eyebrow');
+      const role      = document.querySelector('.hero-role');
+      const cta       = document.querySelector('.hero-cta');
+      const stats     = document.querySelector('.hero-stats');
+
+      // Hide hero elements — we'll control them manually
+      [eyebrow, role, cta, stats].forEach(el => {
+        if (!el) return;
+        el.classList.remove('reveal');
+        el.style.opacity = '0';
+      });
+
+      // ── Audio (Web Audio API, no files needed) ──
+      let ctx = null;
+      function unlockAudio() {
+        if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (ctx.state === 'suspended') ctx.resume();
+      }
+      ['click','keydown','touchstart','mousemove'].forEach(ev =>
+        document.addEventListener(ev, unlockAudio, { once: true })
+      );
+      function click() {
+        try {
+          unlockAudio();
+          if (!ctx || ctx.state !== 'running') return;
+          const n   = Math.floor(ctx.sampleRate * 0.024);
+          const buf = ctx.createBuffer(1, n, ctx.sampleRate);
+          const d   = buf.getChannelData(0);
+          for (let i = 0; i < n; i++)
+            d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.004));
+          const src  = ctx.createBufferSource();
+          src.buffer = buf;
+          const gain = ctx.createGain();
+          gain.gain.setValueAtTime(0.14, ctx.currentTime);
+          src.connect(gain); gain.connect(ctx.destination); src.start();
+        } catch(e) {}
+      }
+
+      // ── Core type function ──
+      function type(el, text, speed, done) {
+        let i = 0;
+        (function next() {
+          el.textContent = text.slice(0, i);
+          if (i > 0) click();
+          i++;
+          if (i <= text.length) setTimeout(next, speed + Math.random() * speed * 0.4);
+          else if (done) setTimeout(done, 180);
+        })();
+      }
+
+      function fadeIn(el, delay, dur) {
+        setTimeout(() => {
+          el.style.transition = 'opacity ' + (dur || 0.75) + 's ease';
+          el.style.opacity = '1';
+        }, delay || 0);
+      }
+
+      // ── Sequence ──
+      fadeIn(eyebrow, 350);
+
+      setTimeout(() => {
+        c1.style.display = 'inline-block';
+        type(L1, 'Shivani', 115, () => {
+          c1.style.display = 'none';
+          c2.style.display = 'inline-block';
+          type(L2, 'Chauhan', 115, () => {
+            c2.style.display = 'none';
+            fadeIn(role, 100);
+            setTimeout(() => {
+              taglineEl.style.transition = 'opacity 0.35s ease';
+              taglineEl.style.opacity = '1';
+              c3.style.display = 'inline-block';
+              type(TL, 'I build content engines that grow audiences, drive acquisition, and turn strategy into measurable results', 33, () => {
+                c3.style.animation = 'none'; c3.style.opacity = '0';
+                fadeIn(cta, 0, 0.9);
+                fadeIn(stats, 350, 0.9);
+              });
+            }, 500);
+          });
+        });
+      }, 750);
+    })();
+
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
 
@@ -681,6 +928,100 @@
     document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
     document.getElementById('mobileClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
     function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); }
+
+    // ─── DASHBOARD ───────────────────────────────
+    let dashInitialized = false;
+
+    function toggleDashboard() {
+      const dash = document.getElementById('dashboard');
+      const btn  = document.getElementById('dashTriggerBtn');
+      const isOpen = dash.classList.contains('open');
+      if (!isOpen) {
+        dash.classList.add('open');
+        btn.classList.add('open');
+        setTimeout(() => dash.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+        if (!dashInitialized) {
+          dashInitialized = true;
+          setTimeout(() => { initDashCharts(); animateDashCounters(); animateDashBars(); }, 500);
+        }
+      } else {
+        dash.classList.remove('open');
+        btn.classList.remove('open');
+      }
+    }
+
+    function initDashCharts() {
+      Chart.defaults.color = 'rgba(242,240,235,0.45)';
+      Chart.defaults.font.family = "'Manrope', system-ui, sans-serif";
+      Chart.defaults.font.size = 11;
+
+      new Chart(document.getElementById('followerChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Instagram', 'YouTube', 'LinkedIn'],
+          datasets: [{
+            data: [60000, 52000, 50000],
+            backgroundColor: ['rgba(225,48,108,0.75)', 'rgba(255,68,68,0.75)', 'rgba(96,130,182,0.75)'],
+            borderColor: ['#e1306c', '#ff4444', '#6082b6'],
+            borderWidth: 2, borderRadius: 6, borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ' ' + (c.raw/1000).toFixed(0) + 'K followers' } } },
+          scales: {
+            y: { grid: { color: 'rgba(255,255,255,0.04)' }, border: { color: 'transparent' }, ticks: { callback: v => v >= 1000 ? (v/1000)+'K' : v } },
+            x: { grid: { display: false }, border: { color: 'transparent' } }
+          }
+        }
+      });
+
+      new Chart(document.getElementById('contentChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Reels Produced', 'Podcast Episodes', 'Viral Reels (2M+)', 'Course Conversions'],
+          datasets: [{
+            data: [600, 100, 50, 100],
+            backgroundColor: ['rgba(106,212,221,0.75)', 'rgba(46,204,113,0.75)', 'rgba(243,156,18,0.75)', 'rgba(155,89,182,0.75)'],
+            borderColor: ['#6ad4dd', '#2ecc71', '#f39c12', '#9b59b6'],
+            borderWidth: 2, borderRadius: 6, borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { grid: { color: 'rgba(255,255,255,0.04)' }, border: { color: 'transparent' } },
+            x: { grid: { display: false }, border: { color: 'transparent' } }
+          }
+        }
+      });
+    }
+
+    function animateDashCounters() {
+      const counters = [
+        { id: 'ctr-ig',    target: 60000,    final: '60K+' },
+        { id: 'ctr-reach', target: 20000000, final: '20M+' },
+        { id: 'ctr-yt',    target: 10000000, final: '10M+' },
+        { id: 'ctr-lead',  target: 100000,   final: '1L+'  },
+      ];
+      counters.forEach(({ id, target, final }) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const dur = 1800, t0 = performance.now();
+        function tick(now) {
+          const p = Math.min((now - t0) / dur, 1);
+          const v = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+          el.textContent = v >= 1000000 ? (v/1000000).toFixed(0)+'M+' : v >= 1000 ? Math.round(v/1000)+'K+' : v+'';
+          if (p < 1) requestAnimationFrame(tick); else el.textContent = final;
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+
+    function animateDashBars() {
+      document.querySelectorAll('.dac-bar[data-w]').forEach(b => { b.style.width = b.dataset.w + '%'; });
+    }
 
     function handleSubmit(e) {
       e.preventDefault();
