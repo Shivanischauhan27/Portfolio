@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shivani Chauhan — Content Lead & Creative Director</title>
+
+  <!-- Google Fonts: Playfair Display (serif) + Inter (sans-serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─────────────────────────────────────────────
+       CSS CUSTOM PROPERTIES
+    ───────────────────────────────────────────── */
+    :root {
+      --bg:          #F5F2ED;
+      --bg-alt:      #EFEBE4;
+      --charcoal:    #1C1C1C;
+      --charcoal-60: #666460;
+      --terracotta:  #C1694F;
+      --dusty-rose:  #C9847A;
+      --accent-light:#F2DDD9;
+      --white:       #FFFFFF;
+      --border:      #DDD8D0;
+
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans:  'Inter', system-ui, sans-serif;
+
+      --radius: 12px;
+      --transition: 0.35s ease;
+      --shadow: 0 4px 24px rgba(28,28,28,0.08);
+      --shadow-hover: 0 12px 40px rgba(28,28,28,0.14);
+    }
+
+    /* ─────────────────────────────────────────────
+       RESET & BASE
+    ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--charcoal);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─────────────────────────────────────────────
+       SCROLL REVEAL ANIMATION
+    ───────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─────────────────────────────────────────────
+       TYPOGRAPHY HELPERS
+    ───────────────────────────────────────────── */
+    .serif { font-family: var(--font-serif); }
+
+    h1, h2, h3 { font-family: var(--font-serif); font-weight: 700; line-height: 1.15; }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--charcoal);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--charcoal-60);
+      max-width: 600px;
+      line-height: 1.75;
+    }
+
+    /* ─────────────────────────────────────────────
+       LAYOUT HELPERS
+    ───────────────────────────────────────────── */
+    .container {
+      width: 90%;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    section { padding: 100px 0; }
+
+    /* ─────────────────────────────────────────────
+       BUTTONS
+    ───────────────────────────────────────────── */
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--terracotta);
+      color: var(--white);
+      border-color: var(--terracotta);
+    }
+    .btn-primary:hover {
+      background: #a8563e;
+      border-color: #a8563e;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(193,105,79,0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--charcoal);
+      border-color: var(--charcoal);
+    }
+    .btn-outline:hover {
+      background: var(--charcoal);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--terracotta);
+      border-color: var(--terracotta);
+      padding: 12px 28px;
+    }
+    .btn-ghost:hover {
+      background: var(--terracotta);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* ─────────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────────── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: rgba(245,242,237,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    #nav.scrolled {
+      border-color: var(--border);
+      box-shadow: 0 2px 16px rgba(28,28,28,0.06);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+    .nav-logo span { color: var(--terracotta); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--charcoal-60);
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -3px;
+      width: 0; height: 2px;
+      background: var(--terracotta);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--charcoal); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--charcoal);
+      transition: all 0.3s;
+    }
+
+    /* Mobile nav */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 998;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      transition: color var(--transition);
+    }
+    .mobile-nav a:hover { color: var(--terracotta); }
+    .mobile-close {
+      position: absolute;
+      top: 22px; right: 24px;
+      font-size: 1.6rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--charcoal);
+    }
+
+    /* ─────────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────────── */
+    #hero {
+      padding: 160px 0 100px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1rem;
+    }
+
+    .hero-name {
+      font-size: clamp(3.2rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .hero-title {
+      font-family: var(--font-sans);
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      font-weight: 400;
+      color: var(--charcoal-60);
+      margin-bottom: 1.75rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-tagline {
+      font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+      line-height: 1.8;
+      color: var(--charcoal);
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+      border-left: 3px solid var(--terracotta);
+      padding-left: 1.25rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Headshot */
+    .hero-photo-wrap {
+      position: relative;
+    }
+    .hero-photo-frame {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      background: var(--accent-light);
+    }
+    .hero-photo-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--terracotta) 0%, var(--dusty-rose) 100%);
+      opacity: 0.08;
+    }
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       PHOTO UPDATE: Replace the src below with your
+       real headshot path or URL, e.g.:
+         src="./shivani-headshot.jpg"
+         src="https://yoursite.com/photo.jpg"
+       src="./shivani-headshot.jpg" 
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+    .hero-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .photo-deco {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 16px;
+      left: 16px;
+      border: 2px solid var(--terracotta);
+      border-radius: 16px;
+      z-index: -1;
+      opacity: 0.4;
+    }
+
+    .photo-badge {
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+      font-size: 0.82rem;
+    }
+    .photo-badge strong {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--terracotta);
+      font-family: var(--font-serif);
+    }
+
+    /* ─────────────────────────────────────────────
+       ABOUT
+    ───────────────────────────────────────────── */
+    #about { background: var(--bg-alt); }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-bio {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--charcoal);
+      margin-bottom: 2rem;
+    }
+
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill-tag {
+      background: var(--white);
+      border: 1px solid var(--border);
+      color: var(--charcoal);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 7px 16px;
+      border-radius: 100px;
+      transition: all var(--transition);
+    }
+    .skill-tag:hover {
+      background: var(--terracotta);
+      color: var(--white);
+      border-color: var(--terracotta);
+      transform: translateY(-2px);
+    }
+
+    /* Stats */
+    .stats-wrap { margin-top: 48px; }
+
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    .stat-number {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--terracotta);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--charcoal-60);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ─────────────────────────────────────────────
+       PROJECTS
+    ───────────────────────────────────────────── */
+    #projects { background: var(--bg); }
+
+    .projects-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       PROJECT THUMBNAIL UPDATE:
+       Each card has a <div class="project-thumb">
+       To add a real image, change:
+         background: linear-gradient(...)
+       to:
+         background: url('./your-image.jpg') center/cover
+       Or add an <img> tag inside .project-thumb
+       Cards are labeled CARD 1–4 in comments below
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+    .project-thumb {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .project-thumb-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .project-thumb-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    /* CARD 1 thumbnail */
+    .thumb-1 { background: linear-gradient(135deg, #C1694F 0%, #E8997D 100%); }
+    /* CARD 2 thumbnail */
+    .thumb-2 { background: linear-gradient(135deg, #4A6FA5 0%, #8EB0D4 100%); }
+    /* CARD 3 thumbnail */
+    .thumb-3 { background: linear-gradient(135deg, #6B4F8A 0%, #A88EC4 100%); }
+    /* CARD 4 thumbnail */
+    .thumb-4 { background: linear-gradient(135deg, #3A7D6E 0%, #7ABCAD 100%); }
+
+    .project-body {
+      padding: 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .project-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      background: var(--accent-light);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    .project-title {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--charcoal);
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--charcoal-60);
+      line-height: 1.7;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .project-results {
+      background: var(--bg-alt);
+      border-left: 3px solid var(--terracotta);
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      color: var(--charcoal);
+      font-weight: 500;
+    }
+    .project-results-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 4px;
+    }
+
+    /* ─────────────────────────────────────────────
+       VIDEOS
+    ───────────────────────────────────────────── */
+    #videos { background: var(--bg-alt); }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .video-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       YOUTUBE VIDEO UPDATE:
+       Replace the src URLs in the iframes below.
+       Format: https://www.youtube.com/embed/VIDEO_ID
+       Example: if your YouTube URL is
+         https://www.youtube.com/watch?v=dQw4w9WgXcQ
+       then the embed src is:
+         https://www.youtube.com/embed/dQw4w9WgXcQ
+
+       VIDEO 1: search for id="yt-video-1"  (~line 555)
+       VIDEO 2: search for id="yt-video-2"  (~line 566)
+
+       For MP4 files: replace the iframe with:
+         <video controls style="width:100%;display:block">
+           <source src="./your-video.mp4" type="video/mp4">
+         </video>
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+    .video-embed-wrap {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+      background: #111;
+    }
+    .video-embed-wrap iframe,
+    .video-embed-wrap video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    .video-info {
+      padding: 20px 24px;
+    }
+    .video-title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .video-desc {
+      font-size: 0.85rem;
+      color: var(--charcoal-60);
+      line-height: 1.6;
+    }
+
+    /* ─────────────────────────────────────────────
+       CREATIVE WRITING / SUBSTACK
+    ───────────────────────────────────────────── */
+    #writing { background: var(--charcoal); }
+
+    .writing-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .writing-label { color: var(--dusty-rose); }
+
+    .writing-title {
+      color: var(--white);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      margin-bottom: 1.25rem;
+    }
+    .writing-title em { color: var(--dusty-rose); font-style: italic; }
+
+    .writing-desc {
+      color: rgba(255,255,255,0.7);
+      font-size: 1rem;
+      line-height: 1.85;
+      margin-bottom: 2rem;
+    }
+
+    .writing-visual {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+      text-align: center;
+    }
+
+    .writing-count {
+      font-family: var(--font-serif);
+      font-size: 5rem;
+      font-weight: 700;
+      color: var(--dusty-rose);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .writing-count-label {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .writing-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--dusty-rose);
+      margin: 24px auto;
+      opacity: 0.4;
+    }
+    .writing-note {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    /* ─────────────────────────────────────────────
+       EXPERIENCE TIMELINE
+    ───────────────────────────────────────────── */
+    #experience { background: var(--bg); }
+
+    .timeline {
+      position: relative;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 120px;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0 40px;
+      margin-bottom: 56px;
+      position: relative;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .timeline-date {
+      text-align: right;
+      padding-top: 4px;
+      padding-right: 0;
+    }
+    .timeline-year {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--terracotta);
+      display: block;
+      line-height: 1.4;
+    }
+    .timeline-present {
+      display: inline-block;
+      background: var(--terracotta);
+      color: var(--white);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 100px;
+      margin-top: 4px;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 120px;
+      top: 8px;
+      width: 12px;
+      height: 12px;
+      background: var(--white);
+      border: 3px solid var(--terracotta);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+
+    .timeline-content { padding-left: 0; }
+
+    .timeline-company {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 4px;
+    }
+    .timeline-role {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 16px;
+    }
+    .timeline-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .timeline-bullets li {
+      font-size: 0.9rem;
+      color: var(--charcoal-60);
+      line-height: 1.65;
+      padding-left: 18px;
+      position: relative;
+    }
+    .timeline-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--terracotta);
+      opacity: 0.5;
+    }
+
+    /* ─────────────────────────────────────────────
+       CONTACT
+    ───────────────────────────────────────────── */
+    #contact { background: var(--bg-alt); }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-info { display: flex; flex-direction: column; gap: 28px; }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-detail { display: flex; flex-direction: column; }
+    .contact-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--charcoal-60);
+      margin-bottom: 3px;
+    }
+    .contact-value {
+      font-size: 0.95rem;
+      color: var(--charcoal);
+      font-weight: 500;
+      transition: color var(--transition);
+    }
+    a.contact-value:hover { color: var(--terracotta); }
+
+    /* Contact Form */
+    .contact-form {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+    }
+
+    .form-group { margin-bottom: 20px; }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--charcoal-60);
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 13px 16px;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--charcoal);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+    }
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--terracotta);
+      box-shadow: 0 0 0 3px rgba(193,105,79,0.12);
+    }
+    .form-textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+    ::placeholder { color: #aaa; }
+
+    .form-submit {
+      width: 100%;
+      padding: 15px;
+      background: var(--terracotta);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: all var(--transition);
+      margin-top: 4px;
+    }
+    .form-submit:hover {
+      background: #a8563e;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(193,105,79,0.3);
+    }
+
+    /* ─────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────── */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.5);
+      padding: 40px 0;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+    footer strong {
+      font-family: var(--font-serif);
+      color: var(--white);
+      font-size: 1rem;
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE — TABLET
+    ───────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 56px; }
+      .hero-photo-wrap { max-width: 360px; margin: 0 auto; }
+      .about-inner { grid-template-columns: 1fr; gap: 48px; }
+      .writing-inner { grid-template-columns: 1fr; gap: 48px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .videos-grid { grid-template-columns: 1fr; }
+
+      .timeline::before { left: 0; }
+      .timeline-item { grid-template-columns: 1fr; gap: 8px; }
+      .timeline-date { text-align: left; }
+      .timeline-dot { left: 0; }
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE — MOBILE
+    ───────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      section { padding: 72px 0; }
+      #hero { padding-top: 120px; }
+
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .stats-strip { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+      .projects-header { flex-direction: column; align-items: flex-start; }
+      .contact-form { padding: 28px 24px; }
+
+      .photo-badge { bottom: -16px; left: -12px; padding: 12px 16px; }
+    }
+
+    @media (max-width: 420px) {
+      .stats-strip { grid-template-columns: 1fr; }
+    }
+
+    /* ─────────────────────────────────────────────
+       SECTION DIVIDER ACCENT
+    ───────────────────────────────────────────── */
+    .section-accent {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+    .accent-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      max-width: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════
+       NAVIGATION
+  ════════════════════════════════════════ -->
+  <nav id="nav">
+    <div class="container nav-inner">
+      <div class="nav-logo">Shivani<span>.</span></div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#videos">Videos</a></li>
+        <li><a href="#writing">Essays</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-close" id="mobileClose">✕</button>
+    <a href="#about"      onclick="closeMobileNav()">About</a>
+    <a href="#projects"   onclick="closeMobileNav()">Work</a>
+    <a href="#videos"     onclick="closeMobileNav()">Videos</a>
+    <a href="#writing"    onclick="closeMobileNav()">Essays</a>
+    <a href="#experience" onclick="closeMobileNav()">Experience</a>
+    <a href="#contact"    onclick="closeMobileNav()">Contact</a>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+
+        <!-- Text -->
+        <div class="reveal">
+          <p class="hero-eyebrow">Content Lead &amp; Creative Director</p>
+          <h1 class="hero-name">Shivani<br><em>Chauhan</em></h1>
+          <p class="hero-title">Building brands through story, strategy &amp; data</p>
+          <blockquote class="hero-tagline">
+            I build content engines that grow audiences, drive acquisition, and turn strategy into measurable results
+          </blockquote>
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary">View My Work</a>
+            <a href="#contact"  class="btn btn-outline">Contact Me</a>
+          </div>
+        </div>
+
+        <!-- Photo -->
+        <div class="hero-photo-wrap reveal">
+          <div class="hero-photo-frame">
+            <!--
+              ════════════════════════════════════════
+              PHOTO UPDATE INSTRUCTIONS
+              ════════════════════════════════════════
+              Replace the src below with your headshot.
+
+              Option A — local file (place in same folder as this HTML):
+                src="./shivani-headshot.jpg"
+
+              Option B — online URL:
+                src="https://example.com/your-photo.jpg"
+
+              The image will be cropped to fill the frame,
+              anchored to the top (face visible).
+              ════════════════════════════════════════
+            -->
+            <img
+              id="headshot-img"
+               src="./shivani-headshot.jpg"
+             alt="Shivani Chauhan — headshot"
+            />
+          </div>
+          <div class="photo-deco"></div>
+          <div class="photo-badge">
+            <strong>5+</strong>
+            Years in Content &amp; Growth
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       ABOUT
+  ════════════════════════════════════════ -->
+  <section id="about">
+    <div class="container">
+      <div class="about-inner">
+
+        <!-- Left: bio + skills -->
+        <div class="reveal">
+          <p class="section-label">About Me</p>
+          <h2 class="section-title">Strategy meets<br><em class="serif" style="font-style:italic;color:var(--terracotta)">storytelling</em></h2>
+          <p class="about-bio">
+            Content Lead with over 5 years of experience driving full-funnel content marketing, social media growth, and product storytelling. Currently leading social-first acquisition at Shine.com (HT Media Group), I specialise in building performance-driven content funnels that connect creative storytelling with real business outcomes.
+          </p>
+          <p class="section-label" style="margin-top:2rem;">Core Skills</p>
+          <div class="skills-grid">
+            <span class="skill-tag">Content Strategy</span>
+            <span class="skill-tag">Social-First Growth</span>
+            <span class="skill-tag">Product Storytelling</span>
+            <span class="skill-tag">Performance Marketing</span>
+            <span class="skill-tag">Social Media Analytics</span>
+            <span class="skill-tag">AI-Assisted Workflows</span>
+            <span class="skill-tag">Video Production</span>
+            <span class="skill-tag">Meta Ads</span>
+            <span class="skill-tag">Google Ads</span>
+            <span class="skill-tag">Creative Direction</span>
+            <span class="skill-tag">Cross-functional Leadership</span>
+            <span class="skill-tag">Short-Form Video</span>
+          </div>
+        </div>
+
+        <!-- Right: stats -->
+        <div class="reveal stats-wrap">
+          <p class="section-label">By the Numbers</p>
+          <div class="stats-strip">
+            <div class="stat-card">
+              <div class="stat-number">5+</div>
+              <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">60K+</div>
+              <div class="stat-label">Instagram Followers Built from Zero</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">600+</div>
+              <div class="stat-label">Videos Produced</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">24M+</div>
+              <div class="stat-label">Monthly Reach</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       PROJECTS / WORK
+  ════════════════════════════════════════ -->
+  <section id="projects">
+    <div class="container">
+
+      <div class="projects-header reveal">
+        <div>
+          <p class="section-label">Selected Work</p>
+          <h2 class="section-title">Projects &amp; Results</h2>
+        </div>
+        <p class="section-subtitle" style="font-size:0.95rem;">A cross-section of strategy, execution, and measurable impact.</p>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- ═══════════ CARD 1 ═══════════
+             THUMBNAIL: Change .thumb-1 background in CSS (~line 370)
+             to swap in a real image, e.g.:
+             background: url('./project1.jpg') center/cover no-repeat;
+        ═══════════════════════════════ -->
+        <div class="project-card reveal">
+          <div class="project-thumb thumb-1">
+            <div class="project-thumb-overlay">
+              <div class="project-thumb-icon">📱</div>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="project-tag">Social Media</span>
+              <span class="project-tag">Content Strategy</span>
+              <span class="project-tag">Short-Form Video</span>
+            </div>
+            <h3 class="project-title">Instagram Growth at AccioJob</h3>
+            <p class="project-desc">Built and scaled AccioJob's Instagram presence from zero through strategic content, experimentation, and consistent short-form video production.</p>
+            <div class="project-results">
+              <div class="project-results-label">Results</div>
+              Grew to 60K+ followers, 24M+ monthly reach, contributing ₹30–40L in high-ticket revenue
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════ CARD 2 ═══════════
+             THUMBNAIL: Change .thumb-2 background in CSS (~line 372)
+        ═══════════════════════════════ -->
+        <div class="project-card reveal">
+          <div class="project-thumb thumb-2">
+            <div class="project-thumb-overlay">
+              <div class="project-thumb-icon">🎙️</div>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="project-tag">YouTube</span>
+              <span class="project-tag">Podcast</span>
+              <span class="project-tag">Video Production</span>
+            </div>
+            <h3 class="project-title">YouTube &amp; Podcast Scaling</h3>
+            <p class="project-desc">Scaled AccioJob's YouTube channel and launched a long-running podcast series, growing the channel through structured content planning and performance tracking.</p>
+            <div class="project-results">
+              <div class="project-results-label">Results</div>
+              Grew from 30K to 53K+ subscribers, launched 100+ episode podcast
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════ CARD 3 ═══════════
+             THUMBNAIL: Change .thumb-3 background in CSS (~line 374)
+        ═══════════════════════════════ -->
+        <div class="project-card reveal">
+          <div class="project-thumb thumb-3">
+            <div class="project-thumb-overlay">
+              <div class="project-thumb-icon">📈</div>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="project-tag">Meta Ads</span>
+              <span class="project-tag">Google Ads</span>
+              <span class="project-tag">Performance Marketing</span>
+            </div>
+            <h3 class="project-title">Performance Marketing Optimisation</h3>
+            <p class="project-desc">Led paid content strategy across Google and Meta, using insight-led experimentation to improve campaign efficiency across the funnel.</p>
+            <div class="project-results">
+              <div class="project-results-label">Results</div>
+              Reduced CPL by 20%, improved conversion rate by 25%
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══════════ CARD 4 ═══════════
+             THUMBNAIL: Change .thumb-4 background in CSS (~line 376)
+        ═══════════════════════════════ -->
+        <div class="project-card reveal">
+          <div class="project-thumb thumb-4">
+            <div class="project-thumb-overlay">
+              <div class="project-thumb-icon">🎯</div>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="project-tag">Full-Funnel</span>
+              <span class="project-tag">Lead Acquisition</span>
+              <span class="project-tag">Content Strategy</span>
+            </div>
+            <h3 class="project-title">Content-Led Acquisition at Shine.com</h3>
+            <p class="project-desc">Owned end-to-end social acquisition strategy across paid and organic channels, designing full-funnel frameworks connecting TOFU content with paid distribution.</p>
+            <div class="project-results">
+              <div class="project-results-label">Results</div>
+              Improved lead quality while reducing acquisition costs
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       VIDEOS
+  ════════════════════════════════════════ -->
+  <section id="videos">
+    <div class="container">
+
+      <div class="reveal" style="margin-bottom:56px;">
+        <p class="section-label">Portfolio</p>
+        <h2 class="section-title">Short-Form Video Work</h2>
+        <p class="section-subtitle">A selection of video content spanning brand storytelling, product education, and social-first formats.</p>
+      </div>
+
+      <div class="videos-grid">
+
+        <!-- ═══════════════════════════════════════════════
+             VIDEO 1 — YOUTUBE EMBED
+             ═══════════════════════════════════════════════
+             To update: change the src URL below.
+             Your YouTube link:  https://www.youtube.com/watch?v=XXXXXXXXXX
+             Embed format:       https://www.youtube.com/embed/XXXXXXXXXX
+             Example (current placeholder):
+               https://www.youtube.com/embed/dQw4w9WgXcQ
+             ═══════════════════════════════════════════════ -->
+        <div class="video-card reveal">
+          <div class="video-embed-wrap">
+            <iframe
+              id="yt-video-1"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="Video 1"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="video-info">
+            <!--
+              UPDATE: Change the title and description below to match your video.
+            -->
+            <div class="video-title">Short-Form Brand Story — Video Title Here</div>
+            <div class="video-desc">Brief description of this video — what it is, who it's for, and what impact it drove.</div>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════
+             VIDEO 2 — YOUTUBE EMBED
+             ═══════════════════════════════════════════════
+             Same instructions as Video 1 above.
+             Update src, title, and description.
+             ═══════════════════════════════════════════════ -->
+        <div class="video-card reveal">
+          <div class="video-embed-wrap">
+            <iframe
+              id="yt-video-2"
+              src="https://www.youtube.com/embed/jNQXAC9IVRw"
+              title="Video 2"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="video-info">
+            <!--
+              UPDATE: Change the title and description below to match your video.
+            -->
+            <div class="video-title">Social-First Content — Video Title Here</div>
+            <div class="video-desc">Brief description of this video — the format, platform it was made for, and results it achieved.</div>
+          </div>
+        </div>
+
+        <!--
+          ═══════════════════════════════════════════════
+          TO ADD MORE VIDEOS — copy this block:
+          ─────────────────────────────────────────────
+
+          For YouTube:
+          <div class="video-card reveal">
+            <div class="video-embed-wrap">
+              <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                title="Your Title"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+            <div class="video-info">
+              <div class="video-title">Your Video Title</div>
+              <div class="video-desc">Your description.</div>
+            </div>
+          </div>
+
+          For Vimeo:
+          <div class="video-card reveal">
+            <div class="video-embed-wrap">
+              <iframe src="https://player.vimeo.com/video/YOUR_VIMEO_ID"
+                title="Your Title"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+            <div class="video-info">
+              <div class="video-title">Your Video Title</div>
+              <div class="video-desc">Your description.</div>
+            </div>
+          </div>
+
+          For MP4 file:
+          <div class="video-card reveal">
+            <div class="video-embed-wrap">
+              <video controls>
+                <source src="./your-video.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="video-info">
+              <div class="video-title">Your Video Title</div>
+              <div class="video-desc">Your description.</div>
+            </div>
+          </div>
+          ═══════════════════════════════════════════════
+        -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       CREATIVE WRITING / SUBSTACK
+  ════════════════════════════════════════ -->
+  <section id="writing">
+    <div class="container">
+      <div class="writing-inner">
+
+        <div class="reveal">
+          <p class="section-label writing-label">Independent Work</p>
+          <h2 class="writing-title">Cultural Diet —<br><em>Essays on Culture<br>&amp; Digital Growth</em></h2>
+          <p class="writing-desc">
+            Independent talking-head essays blending media theory, culture, and digital growth. 50+ scripted essays, end-to-end produced. Published on Substack.
+          </p>
+          <!--
+            UPDATE: Replace '#' below with your real Substack URL
+            e.g. href="https://shivani.substack.com"
+          -->
+          <a href="#" class="btn btn-ghost" style="border-color:var(--dusty-rose);color:var(--dusty-rose);" onmouseover="this.style.background='#C9847A'" onmouseout="this.style.background='transparent'">
+            Read on Substack →
+          </a>
+        </div>
+
+        <div class="writing-visual reveal">
+          <div class="writing-count">50+</div>
+          <div class="writing-count-label">Scripted &amp; Produced Essays</div>
+          <div class="writing-divider"></div>
+          <p class="writing-note">"End-to-end — research, script, camera, edit, publish."</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       EXPERIENCE TIMELINE
+  ════════════════════════════════════════ -->
+  <section id="experience">
+    <div class="container">
+
+      <div style="text-align:center;margin-bottom:64px;" class="reveal">
+        <p class="section-label">Career</p>
+        <h2 class="section-title">Experience</h2>
+      </div>
+
+      <div class="timeline">
+
+        <!-- Role 1 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-date">
+            <span class="timeline-year">Jan 2026<br>→</span>
+            <span class="timeline-present">Present</span>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <p class="timeline-company">HT Media Group — Shine.com</p>
+            <h3 class="timeline-role">Content Lead</h3>
+            <ul class="timeline-bullets">
+              <li>Led social-first lead acquisition across YouTube, Instagram, and LinkedIn</li>
+              <li>Built performance-driven content funnels contributing to user registrations</li>
+              <li>Designed full-funnel frameworks connecting TOFU content with paid distribution</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Role 2 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-date">
+            <span class="timeline-year">Sep 2021<br>→ Jan 2026</span>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <p class="timeline-company">AccioJob Pvt Ltd (YC-backed)</p>
+            <h3 class="timeline-role">Creative Director</h3>
+            <ul class="timeline-bullets">
+              <li>Defined end-to-end creative strategy across brand, product, and growth</li>
+              <li>Managed and mentored a six-member content team</li>
+              <li>Drove performance marketing through insight-led content and structured experimentation</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Role 3 -->
+        <div class="timeline-item reveal">
+          <div class="timeline-date">
+            <span class="timeline-year">Sep 2024<br>→</span>
+            <span class="timeline-present">Present</span>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <p class="timeline-company">Independent</p>
+            <h3 class="timeline-role">Creative Video Essays — Cultural Diet</h3>
+            <ul class="timeline-bullets">
+              <li>Researched and scripted 50+ short-form essays on culture and digital growth</li>
+              <li>Handled end-to-end production including filming, editing, and graphics</li>
+              <li>Published long-form essays via Substack</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       CONTACT
+  ════════════════════════════════════════ -->
+  <section id="contact">
+    <div class="container">
+
+      <div style="margin-bottom:56px;" class="reveal">
+        <p class="section-label">Get in Touch</p>
+        <h2 class="section-title">Let's Work Together</h2>
+        <p class="section-subtitle">Open to collaborations, consulting projects, and full-time opportunities in content, growth, and creative strategy.</p>
+      </div>
+
+      <div class="contact-inner">
+
+        <!-- Contact info -->
+        <div class="contact-info reveal">
+
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div class="contact-detail">
+              <span class="contact-label">Email</span>
+              <a href="mailto:shivani2741994@gmail.com" class="contact-value">shivani2741994@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div class="contact-detail">
+              <span class="contact-label">Phone</span>
+              <a href="tel:+919650604698" class="contact-value">+91-9650604698</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">💼</div>
+            <div class="contact-detail">
+              <span class="contact-label">LinkedIn</span>
+              <a href="https://linkedin.com/in/shivani-chauhan-5a1105273" target="_blank" rel="noopener" class="contact-value">linkedin.com/in/shivani-chauhan-5a1105273</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Contact form -->
+        <div class="contact-form reveal">
+          <form id="contactForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+              <label class="form-label" for="name">Name</label>
+              <input class="form-input" type="text" id="name" name="name" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email</label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="message">Message</label>
+              <textarea class="form-textarea" id="message" name="message" placeholder="Tell me about your project or opportunity…" required></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send Message →</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <strong>Shivani Chauhan</strong>
+      <p style="margin-top:8px;">Content Lead &amp; Creative Director · © 2026 · All rights reserved</p>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════ -->
+  <script>
+    // ─── Sticky nav shadow on scroll ───────────────────────
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 24);
+    });
+
+    // ─── Scroll reveal ──────────────────────────────────────
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Stagger siblings inside same parent
+          const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+          siblings.forEach((el, i) => {
+            el.style.transitionDelay = `${i * 0.08}s`;
+          });
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach((el) => revealObserver.observe(el));
+
+    // ─── Mobile nav ─────────────────────────────────────────
+    const hamburger   = document.getElementById('hamburger');
+    const mobileNav   = document.getElementById('mobileNav');
+    const mobileClose = document.getElementById('mobileClose');
+
+    hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
+    mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+
+    function closeMobileNav() {
+      mobileNav.classList.remove('open');
+    }
+
+    // ─── Contact form ───────────────────────────────────────
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      const name = document.getElementById('name').value;
+
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = '#3A7D6E';
+      btn.disabled = true;
+
+      // Reset after 4s
+      setTimeout(() => {
+        e.target.reset();
+        btn.textContent = 'Send Message →';
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 4000);
+
+      // NOTE: To actually send this form, connect to a service like:
+      // Formspree (https://formspree.io), Netlify Forms, or EmailJS.
+      // Or open a mailto: link as a simple fallback:
+      // window.location.href = `mailto:shivani2741994@gmail.com?subject=Portfolio Inquiry from ${name}&body=${message}`;
+    }
+  </script>
+
+</body>
+</html>
