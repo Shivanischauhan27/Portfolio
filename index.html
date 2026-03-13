@@ -351,6 +351,7 @@
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Work</a></li>
+      <li><a href="#dashboard" onclick="openDashboard(); return false;">Results</a></li>
       <li><a href="#videos">Videos</a></li>
       <li><a href="#writing">Essays</a></li>
       <li><a href="#experience">Experience</a></li>
@@ -365,6 +366,7 @@
     <button class="mobile-close" id="mobileClose">✕</button>
     <a href="#about"      onclick="closeMobileNav()">About</a>
     <a href="#projects"   onclick="closeMobileNav()">Work</a>
+    <a href="#dashboard"  onclick="closeMobileNav(); openDashboard(); return false;">Results</a>
     <a href="#videos"     onclick="closeMobileNav()">Videos</a>
     <a href="#writing"    onclick="closeMobileNav()">Essays</a>
     <a href="#experience" onclick="closeMobileNav()">Experience</a>
@@ -931,6 +933,20 @@
 
     // ─── DASHBOARD ───────────────────────────────
     let dashInitialized = false;
+
+    function openDashboard() {
+      const dash = document.getElementById('dashboard');
+      const btn  = document.getElementById('dashTriggerBtn');
+      if (!dash.classList.contains('open')) {
+        dash.classList.add('open');
+        btn.classList.add('open');
+        if (!dashInitialized) {
+          dashInitialized = true;
+          setTimeout(() => { initDashCharts(); animateDashCounters(); animateDashBars(); }, 500);
+        }
+      }
+      setTimeout(() => dash.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+    }
 
     function toggleDashboard() {
       const dash = document.getElementById('dashboard');
